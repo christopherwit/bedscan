@@ -99,7 +99,7 @@ heated_bed = np.empty(probed_points.shape)
 
 trace("Bed scan wizard Initiated")
 port = '/dev/ttyAMA0'
-baud = 115200
+baud = 250000
 
 #initialize serial
 serial = serial.Serial(port, baud, timeout=0.6)
