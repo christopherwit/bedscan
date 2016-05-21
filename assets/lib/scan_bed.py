@@ -2,6 +2,7 @@
 import time
 import sys, os
 import serial
+import ConfigParser
 from subprocess import call
 from mpl_toolkits.mplot3d import Axes3D
 import matplotlib
@@ -98,11 +99,14 @@ def macro(code,expected_reply,timeout,error_msg,delay_after,warning=False,verbos
 heated_bed = np.empty(probed_points.shape)
 
 trace("Bed scan wizard Initiated")
-port = '/dev/ttyAMA0'
-baud = 250000
+#read serial communication settings
+config = ConfigParser.ConfigParser()
+config.read('/var/www/lib/serial.ini')
+serial_port = config.get('serial', 'port')
+serial_baud = config.get('serial', 'baud')
 
 #initialize serial
-serial = serial.Serial(port, baud, timeout=0.6)
+serial = serial.Serial(serial_port, serial_baud, timeout=0.6)
 serial.flushInput()
 
 macro("M741","TRIGGERED",2,"Front panel door control",1, verbose=False)	
